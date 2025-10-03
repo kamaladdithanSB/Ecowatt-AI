@@ -1,0 +1,108 @@
+import React from "react";
+import { motion } from "framer-motion";
+import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { 
+  Zap, 
+  TrendingDown, 
+  Leaf, 
+  DollarSign,
+  ArrowUp,
+  ArrowDown
+} from "lucide-react";
+
+export default function ImpactCards({ results, isLoading }) {
+  const latestResult = results?.[0];
+  
+  const cards = [
+    {
+      title: "Energy Saved",
+      value: `${latestResult?.energy_saved_kwh?.toFixed(1) || '0'} kWh`,
+      percentage: `${latestResult?.energy_saved_percentage?.toFixed(1) || '0'}%`,
+      icon: Zap,
+      color: "from-blue-500 to-cyan-600",
+      trend: "up"
+    },
+    {
+      title: "CO₂ Reduced",
+      value: `${latestResult?.co2_reduced_kg?.toFixed(1) || '0'} kg`,
+      percentage: "15% less",
+      icon: TrendingDown,
+      color: "from-emerald-500 to-teal-600",
+      trend: "down"
+    },
+    {
+      title: "Trees Planted",
+      value: `${Math.floor(latestResult?.trees_equivalent || 0)}`,
+      percentage: "equivalent",
+      icon: Leaf,
+      color: "from-green-500 to-emerald-600",
+      trend: "up"
+    },
+    {
+      title: "Cost Saved",
+      value: `$${latestResult?.cost_saved_usd?.toFixed(2) || '0.00'}`,
+      percentage: "this month",
+      icon: DollarSign,
+      color: "from-yellow-500 to-orange-600",
+      trend: "up"
+    }
+  ];
+
+  if (isLoading) {
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        {cards.map((_, index) => (
+          <Card key={index} className="glass-card border-0 shadow-xl rounded-3xl">
+            <CardContent className="p-6">
+              <Skeleton className="h-16 w-full mb-4" />
+              <Skeleton className="h-4 w-24" />
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      {cards.map((card, index) => (
+        <motion.div
+          key={card.title}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: index * 0.1 }}
+          whileHover={{ y: -5 }}
+        >
+          <Card className="glass-card border-0 shadow-xl rounded-3xl overflow-hidden group hover:shadow-2xl transition-all duration-500">
+            <CardContent className="p-6 relative">
+              <div className="flex items-center justify-between mb-4">
+                <div className={`w-12 h-12 bg-gradient-to-br ${card.color} rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                  <card.icon className="w-6 h-6 text-white" />
+                </div>
+                <div className={`flex items-center gap-1 text-sm font-medium ${
+                  card.trend === 'up' ? 'text-emerald-600' : 'text-red-600'
+                }`}>
+                  {card.trend === 'up' ? (
+                    <ArrowUp className="w-4 h-4" />
+                  ) : (
+                    <ArrowDown className="w-4 h-4" />
+                  )}
+                  {card.percentage}
+                </div>
+              </div>
+              
+              <div className="space-y-2">
+                <p className="text-sm font-medium text-gray-600">{card.title}</p>
+                <p className="text-2xl font-bold text-gray-900">{card.value}</p>
+              </div>
+              
+              {/* Decorative elements */}
+              <div className={`absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-br ${card.color} rounded-full opacity-10 group-hover:opacity-20 transition-opacity duration-300`} />
+            </CardContent>
+          </Card>
+        </motion.div>
+      ))}
+    </div>
+  );
+}

@@ -1,0 +1,87 @@
+import React from "react";
+import { motion } from "framer-motion";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Leaf, Trophy, Star } from "lucide-react";
+
+export default function GreenScoreCard({ score, isLoading }) {
+  const getScoreLevel = (score) => {
+    if (score >= 80) return { level: "Eco Champion", icon: Trophy, color: "text-yellow-600", bg: "bg-yellow-100" };
+    if (score >= 60) return { level: "Green Warrior", icon: Star, color: "text-emerald-600", bg: "bg-emerald-100" };
+    if (score >= 40) return { level: "Eco Explorer", icon: Leaf, color: "text-green-600", bg: "bg-green-100" };
+    return { level: "Getting Started", icon: Leaf, color: "text-gray-600", bg: "bg-gray-100" };
+  };
+
+  const scoreLevel = getScoreLevel(score);
+
+  if (isLoading) {
+    return (
+      <Card className="glass-card border-0 shadow-xl rounded-3xl">
+        <CardHeader>
+          <Skeleton className="h-6 w-32" />
+        </CardHeader>
+        <CardContent>
+          <Skeleton className="h-20 w-full" />
+        </CardContent>
+      </Card>
+    );
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5, delay: 0.3 }}
+    >
+      <Card className="glass-card border-0 shadow-xl rounded-3xl overflow-hidden green-glow">
+        <CardHeader className="bg-gradient-to-r from-emerald-500/10 to-teal-500/10">
+          <CardTitle className="flex items-center gap-2">
+            <div className={`w-8 h-8 ${scoreLevel.bg} rounded-lg flex items-center justify-center`}>
+              <scoreLevel.icon className={`w-4 h-4 ${scoreLevel.color}`} />
+            </div>
+            Green Score
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="p-6">
+          <div className="text-center space-y-4">
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.8, type: "spring" }}
+              className="text-4xl font-bold text-emerald-600"
+            >
+              {score}
+              <span className="text-lg text-gray-500">/100</span>
+            </motion.div>
+            
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: "100%" }}
+              transition={{ duration: 1, delay: 0.5 }}
+            >
+              <Progress 
+                value={score} 
+                className="h-3 bg-gray-200"
+                style={{
+                  background: `linear-gradient(to right, rgb(34, 197, 94) ${score}%, rgb(229, 231, 235) ${score}%)`
+                }}
+              />
+            </motion.div>
+            
+            <div className={`inline-flex items-center gap-2 px-3 py-2 ${scoreLevel.bg} rounded-full`}>
+              <scoreLevel.icon className={`w-4 h-4 ${scoreLevel.color}`} />
+              <span className={`text-sm font-medium ${scoreLevel.color}`}>
+                {scoreLevel.level}
+              </span>
+            </div>
+            
+            <p className="text-sm text-gray-600">
+              Keep optimizing to reach the next level!
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+    </motion.div>
+  );
+}

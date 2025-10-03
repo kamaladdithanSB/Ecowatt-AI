@@ -1,0 +1,127 @@
+import React from "react";
+import { motion } from "framer-motion";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart } from "recharts";
+import { Skeleton } from "@/components/ui/skeleton";
+import { TrendingDown, Zap } from "lucide-react";
+import { format } from "date-fns";
+
+export default function EnergyChart({ data, isLoading }) {
+  const chartData = data?.slice(0, 24).reverse().map(item => ({
+    time: format(new Date(item.timestamp), 'HH:mm'),
+    original: item.usage_kwh,
+    optimized: item.optimized_usage_kwh || item.usage_kwh * 0.8,
+    saved: item.usage_kwh - (item.optimized_usage_kwh || item.usage_kwh * 0.8)
+  })) || [];
+
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="glass-card p-4 rounded-xl border-0 shadow-xl">
+          <p className="font-medium text-gray-900 mb-2">Time: {label}</p>
+          {payload.map((entry, index) => (
+            <p key={index} className="text-sm" style={{ color: entry.color }}>
+              {entry.name}: {entry.value.toFixed(2)} kWh
+            </p>
+          ))}
+        </div>
+      );
+    }
+    return null;
+  };
+
+  if (isLoading) {
+    return (
+      <Card className="glass-card border-0 shadow-xl rounded-3xl">
+        <CardHeader>
+          <Skeleton className="h-6 w-48" />
+        </CardHeader>
+        <CardContent>
+          <Skeleton className="h-80 w-full" />
+        </CardContent>
+      </Card>
+    );
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+    >
+      <Card className="glass-card border-0 shadow-xl rounded-3xl overflow-hidden">
+        <CardHeader className="bg-gradient-to-r from-emerald-500/10 to-teal-500/10">
+          <div className="flex items-center justify-between">
+            <CardTitle className="flex items-center gap-2 text-xl">
+              <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg flex items-center justify-center">
+                <Zap className="w-4 h-4 text-white" />
+              </div>
+              Energy Consumption Pattern
+            </CardTitle>
+            <div className="flex items-center gap-2 text-sm text-emerald-600 font-medium">
+              <TrendingDown className="w-4 h-4" />
+              Optimized vs Original
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent className="p-6">
+          <div className="h-80">
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={chartData}>
+                <defs>
+                  <linearGradient id="originalGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#ef4444" stopOpacity={0.3}/>
+                    <stop offset="95%" stopColor="#ef4444" stopOpacity={0}/>
+                  </linearGradient>
+                  <linearGradient id="optimizedGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
+                    <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                <XAxis 
+                  dataKey="time" 
+                  stroke="#64748b"
+                  fontSize={12}
+                />
+                <YAxis 
+                  stroke="#64748b"
+                  fontSize={12}
+                  label={{ value: 'kWh', angle: -90, position: 'insideLeft' }}
+                />
+                <Tooltip content={<CustomTooltip />} />
+                <Area
+                  type="monotone"
+                  dataKey="original"
+                  stroke="#ef4444"
+                  strokeWidth={3}
+                  fill="url(#originalGradient)"
+                  name="Original Usage"
+                />
+                <Area
+                  type="monotone"
+                  dataKey="optimized"
+                  stroke="#10b981"
+                  strokeWidth={3}
+                  fill="url(#optimizedGradient)"
+                  name="Optimized Usage"
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+          
+          <div className="flex justify-center gap-8 mt-6">
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 bg-red-500 rounded-full"></div>
+              <span className="text-sm text-gray-600">Original Usage</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 bg-emerald-500 rounded-full"></div>
+              <span className="text-sm text-gray-600">Optimized Usage</span>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </motion.div>
+  );
+}

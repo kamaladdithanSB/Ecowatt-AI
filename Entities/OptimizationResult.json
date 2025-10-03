@@ -1,0 +1,52 @@
+{
+  "name": "OptimizationResult",
+  "type": "object",
+  "properties": {
+    "total_usage_before": {
+      "type": "number",
+      "description": "Total energy usage before optimization (kWh)"
+    },
+    "total_usage_after": {
+      "type": "number",
+      "description": "Total energy usage after optimization (kWh)"
+    },
+    "energy_saved_kwh": {
+      "type": "number",
+      "description": "Energy saved in kWh"
+    },
+    "energy_saved_percentage": {
+      "type": "number",
+      "description": "Percentage of energy saved"
+    },
+    "co2_reduced_kg": {
+      "type": "number",
+      "description": "CO2 reduced in kg"
+    },
+    "trees_equivalent": {
+      "type": "number",
+      "description": "Number of trees equivalent to CO2 reduction"
+    },
+    "green_score": {
+      "type": "number",
+      "description": "Gamification score (0-100)"
+    },
+    "cost_saved_usd": {
+      "type": "number",
+      "description": "Money saved in USD"
+    },
+    "optimization_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the optimization was performed"
+    }
+  },
+  "required": [
+    "total_usage_before",
+    "total_usage_after",
+    "energy_saved_kwh",
+    "energy_saved_percentage",
+    "co2_reduced_kg",
+    "trees_equivalent",
+    "green_score"
+  ]
+}

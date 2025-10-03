@@ -1,0 +1,40 @@
+{
+  "name": "EnergyData",
+  "type": "object",
+  "properties": {
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of energy reading"
+    },
+    "usage_kwh": {
+      "type": "number",
+      "description": "Energy usage in kWh"
+    },
+    "optimized_usage_kwh": {
+      "type": "number",
+      "description": "AI-optimized energy usage in kWh"
+    },
+    "device_type": {
+      "type": "string",
+      "enum": [
+        "heating",
+        "cooling",
+        "lighting",
+        "appliances",
+        "other"
+      ],
+      "default": "other",
+      "description": "Type of energy consuming device"
+    },
+    "is_peak_hour": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this timestamp is during peak hours"
+    }
+  },
+  "required": [
+    "timestamp",
+    "usage_kwh"
+  ]
+}
