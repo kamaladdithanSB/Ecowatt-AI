@@ -1,6 +1,6 @@
 # ⚡ EcoWattAI – AI-Powered Energy Optimization Platform  
 
-[![Live Demo](https://img.shields.io/badge/Demo-Live-brightgreen?style=for-the-badge&logo=vercel)](https://nokia-opti-flow-5e11eed5.base44.app/Dashboard)
+[![Live Demo](https://img.shields.io/badge/Demo-Live-brightgreen?style=for-the-badge&logo=vercel)](https://eco-watt-ai-0df596b8.base44.app/Home)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](#license)
 [![Built With](https://img.shields.io/badge/Built%20With-React%20%7C%20FastAPI%20%7C%20Python-orange?style=for-the-badge)]()
 
@@ -81,7 +81,7 @@ uvicorn main:app --reload
 
 ## 📖 Usage  
 
-1. Open the [Live Demo](https://nokia-opti-flow-5e11eed5.base44.app/Dashboard).  
+1. Open the [Live Demo](https://eco-watt-ai-0df596b8.base44.app/Home).  
 2. Upload your sample energy dataset (CSV/Excel).  
 3. Click **Optimize** to generate suggestions.  
 4. Explore:  
@@ -124,5 +124,5 @@ Distributed under the **MIT License**. See `LICENSE` for details.
 
 ## 🔗 Live Demo  
 
-👉 [Click here to try EcoWattAI](https://nokia-opti-flow-5e11eed5.base44.app/Dashboard)  
+👉 [Click here to try EcoWattAI](https://eco-watt-ai-0df596b8.base44.app/Home)  
 
