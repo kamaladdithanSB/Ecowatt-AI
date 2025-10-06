@@ -4,6 +4,7 @@
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](#license)
 [![Built With](https://img.shields.io/badge/Built%20With-React%20%7C%20FastAPI%20%7C%20Python-orange?style=for-the-badge)]()
 
+![EcoWattAI Banner](ecobanner.png)  
 ---
 
 ## 🌍 Introduction  
