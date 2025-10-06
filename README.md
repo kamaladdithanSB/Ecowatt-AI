@@ -35,7 +35,7 @@ It acts as a **smart energy coach**, analyzing usage patterns, detecting ineffic
    - K-Means Clustering → identifies peak hours.  
 4. **Optimization Suggestions** – Actionable advice to reduce waste.  
 5. **Impact Tracking** – View cost savings, CO₂ avoided, and trees planted.  
-6. **Engage with AI** – Ask questions and receive tailored recommendations.  
+
 
 ---
 
