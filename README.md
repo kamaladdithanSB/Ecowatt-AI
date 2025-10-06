@@ -121,6 +121,13 @@ Distributed under the **MIT License**. See `LICENSE` for details.
 - **VIT Chennai – YUVA-AI-THON National Level Hackathon** (First Place 🏆)  
 
 ---
+## 🔴 Live Demo Preview  
+
+![EcoWattAI Home](home.png)  
+![EcoWattAI Dashboard](dashboard.png) 
+![EcoWattAI Optimisation Reprt](optimisation.png) 
+![EcoWattAI AI Recommendation](AI-Recommendation.png)  
+
 
 ## 🔗 Live Demo  
 
